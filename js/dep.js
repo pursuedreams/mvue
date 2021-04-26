@@ -12,6 +12,7 @@ class Dep{
     notify(){
         //通知，即执行每个sub的update()
         this.subs.forEach(sub=>{
+            console.log(sub, "=================> sub")
             sub.update();
         })
     }

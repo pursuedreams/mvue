@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>递归处理数据</title>
+</head>
+<body>
+    <div id="app">
+      
+    </div>
+    <script>
+        let data = [
+            {
+                "companyName": "中恒电气",
+                "stationList": [
+                    {
+                        "stationName": "中恒电气站点1",
+                        "nameList": [
+                            {
+                                "name": "cxx1"
+                            }
+                        ]
+                    },
+                    {
+                        "stationName": "中恒电气站点2",
+                        "nameList": [
+                            {
+                                "name": "cxx4"
+                            },
+                            {
+                                "name": "cxx5"
+                            }
+                        ]
+                    },
+                    {
+                        "stationName": "中恒电气站点3",
+                        "nameList": [
+                            {
+                                "name": "cxx3"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+
+        let keyParam = { name: ['companyName', 'stationName', 'name'], children: ['stationList', 'nameList'], slot: ['company', 'station', 'people'] }
+
+        function Recursion(data, keyData) {
+            // console.log(data, keyData, "==================> 进入数据")
+            let newData = []
+            let newkeyData = keyData
+            
+            data.map((item, key)=>{
+                let newkey, name, children, slot
+                keyData.name.forEach((element, len) => {
+                    if (item[element] && item[element].length > 0 ){
+                        name = keyData.name[len]
+                        children = keyData.children[len]
+                        slot = keyData.slot[len]
+                        newkey = key
+                    }
+                });
+
+                // console.log( newkey, name, children, slot, "========================>  newkey, name, children, slot")
+
+                newData.push({
+                    ...item,
+                    name: item[name],
+                    slotScope: { slot },
+                    key: newkey,
+                    children: (children && item[children]?.length) ? Recursion(item[children], newkeyData) : []
+                })
+
+                
+                console.log(name,item[name], "========================> 递归执行的顺序, 先执行最深层，最后执行最外层。")
+            })
+           
+
+            return newData
+        }
+
+        let RecursionData = Recursion(data, keyParam)
+
+        console.log(data, RecursionData, "================> RecursionData")
+    </script>
+   
+</body>
+</html>

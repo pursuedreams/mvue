@@ -7,6 +7,7 @@ class Watcher{
         //下面三行代码实现了将watcher添加到了this.subs中
         //把watcher对象记录到Dep类的静态属性target属性
         //当触发observer.js中的get()时，get()会调用addSub(Dep.target)
+        console.log(this, "====================> Watcher Dep.target", vm,key,cb)
         Dep.target=this;
         //下面的vm[key]就触发了get()，这时watcher就被加入了this.subs中
         this.oldValue=vm[key];

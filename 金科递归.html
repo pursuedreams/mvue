@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var list = [
+      {
+        "companyName": "中恒电气",
+        "stationList": [
+          {
+            "stationName": "中恒电气站点1",
+            "nameList": [
+              {
+                "name": "cxx1"
+              },
+              {
+                "name": "cxx2"
+              },
+              {
+                "name": "cxx3"
+              }
+            ]
+          },
+          {
+            "stationName": "中恒电气站点2",
+            "nameList": [
+              {
+                "name": "cxx4"
+              },
+              {
+                "name": "cxx5"
+              }
+            ]
+          },
+          {
+            "stationName": "中恒电气站点3",
+            "nameList": [
+              {
+                "name": "cxx3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "companyName": "中恒电气2",
+        "stationList": [
+          {
+            "stationName": "中恒电气站点21",
+            "nameList": [
+              {
+                "name": "cxx21"
+              },
+              {
+                "name": "cxx22"
+              },
+              {
+                "name": "cxx23"
+              }
+            ]
+          },
+          {
+            "stationName": "中恒电气站点22",
+            "nameList": [
+              {
+                "name": "cxx24"
+              },
+              {
+                "name": "cxx25"
+              }
+            ]
+          },
+          {
+            "stationName": "中恒电气站点23",
+            "nameList": [
+              {
+                "name": "cxx23"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+    function recursion(list, attr = { name: ['companyName', 'stationName', 'name'], children: ['stationList', 'nameList'], slot: ['company', 'station', 'people'] }) {
+      let tree = []
+      list.forEach(item => {
+        let name, children, slot
+        for (let len = attr.name.length; len--;) {
+          if (item[attr.name[len]]) {
+            name = attr.name[len]
+            children = attr.children[len]
+            slot = attr.slot[len]
+            break;
+          }
+        }
+        tree.push(
+          {
+            name: item[name],
+            slotScope: { slot },
+            children: (children && item[children]?.length) ? recursion(item[children], attr) : []
+          }
+        )
+      })
+      return tree
+    }
+    console.log(list, recursion(list))
+  </script>
+</body>
+
+</html>
