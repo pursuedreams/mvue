@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>递归深拷贝</title>
+</head>
+<body>
+    <div id="app">
+      
+    </div>
+    <script>
+        let obj = {key: 1, name: 'cxx', objdata: {title: '123', content: '456'}}
+        function clone(o) {
+            console.log(o, "=======================> ooooooooooooooooo")
+            let clonedata = {}
+
+            Object.keys(o).forEach(function(key){
+
+                console.log(key,o[key]);
+                if (typeof o[key] === 'object') {
+                   
+                    clonedata[key] = clone(o[key]) // 递归
+                }
+                else {
+                    clonedata[key] = o[key]
+                }
+
+                console.log(key, clonedata, "===============> 执行顺序")
+
+            });
+            
+          
+            return clonedata
+        }
+
+        let newobj = clone(obj)
+        newobj.name = '小姐姐'
+        newobj.objdata.title = 'title'
+        console.log(obj, newobj, "==================> newobj")
+    </script>
+   
+</body>
+</html>
